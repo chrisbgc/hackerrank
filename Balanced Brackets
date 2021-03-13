@@ -1,0 +1,42 @@
+string isBalanced(string s) {
+    stack<char> l;
+    for (char& a : s){
+        if(a == '{' || a == '[' || a == '(')
+        l.push(a);
+
+        if(a == '}' || a == ']' || a == ')'){
+            if(l.empty() || abs((int)l.top()-(int)a) >2){
+                return "NO";
+            }
+        l.pop();
+        }
+        else throw std::invalid_argument("brackets only");
+    }
+    return l.empty() ? "YES" : "NO";
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    int t;
+    cin >> t;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    try{
+    for (int t_itr = 0; t_itr < t; t_itr++) {
+        string s;
+        getline(cin, s);
+
+        string result = isBalanced(s);
+
+        fout << result << "\n";
+    }
+    }
+    catch(std::invalid_argument e){
+        std:: cout << e.what();
+    }
+
+    fout.close();
+
+    return 0;
+}
